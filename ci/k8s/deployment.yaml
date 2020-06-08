@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: akvo-data-science-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: akvo-data-science-services
+  template:
+    metadata:
+      labels:
+        run: data-science-services
+        code-version: ${TRAVIS_COMMIT}
+    spec:
+      containers:
+      - name: akvo-data-science-services
+        image: eu.gcr.io/akvo-lumen/akvo-data-science-services:${TRAVIS_COMMIT}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi
+          limits:
+            cpu: 1
+            memory: 200Mi
+        env:
+        - name: AUTH_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: akvo
+              key: auth.public.client.id
+        - name: AUTH_CLIENT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: data-science
+              key: auth0.client.secret
+        - name: AUTH_USER_EMAIL
+          valueFrom:
+            secretKeyRef:
+              name: data-science
+              key: auth0.user.email
+        - name: AUTH_USER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: data-science
+              key: auth0.user.password
+        - name: AUTH_ISSUER
+          valueFrom:
+            configMapKeyRef:
+              name: akvo
+              key: auth.url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: akvo-data-science-services
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 5000
+      protocol: TCP
+      name: http
+  selector:
+    run: akvo-data-science-services

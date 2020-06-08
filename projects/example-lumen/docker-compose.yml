@@ -1,0 +1,11 @@
+version: "3"
+services:
+  data-science-auth:
+    build: ./../../auth/
+  api:
+    build: .
+    volumes:
+     - ./data:/data
+     - .:/app
+    ports:
+     - "7001:8000"
