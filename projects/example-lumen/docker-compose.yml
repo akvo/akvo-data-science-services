@@ -7,7 +7,7 @@ services:
      - AUTH_CLIENT_ID=${AUTH_CLIENT_ID}
      - AUTH_CLIENT_PASSWORD=${AUTH_CLIENT_PASSWORD}
      - AUTH_ISSUER=${AUTH_ISSUER}
-    build: ./../../auth/
+    build: ./../../support/auth/
   api:
     build: .
     volumes:
