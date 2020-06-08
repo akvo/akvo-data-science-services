@@ -3,7 +3,7 @@ library(httr)
 
 #* Function to authenticate with auth0 using default data-science auth0 account 
 auth_headers <- function(){
-    add_headers(Authorization = paste0("Bearer ", content(GET("http://akvo-data-science-auth:8000/id_token"))))    
+    add_headers(Authorization = paste0("Bearer ", content(GET("http://akvo-data-science-auth/id_token"))))    
 }
 
 #* Example of using/returning the lumen dataset rows
