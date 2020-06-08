@@ -6,7 +6,7 @@ It uses a default data-science akvo email account in auth0 dev and prod envs
 ## Final Purpose
 
 The target idea is to import data from lumen using this webserver. Internally the R code can also connect to flumen to get flow-lumen data, transform it and then return a new dataset. 
-So the expected end is set up a new entrypoint that returns csv data so flumen can import it using the UI [[import-ui](https://github.com/akvo/akvo-data-science-docker/blob/master/docs/flumen-import-link.png), [link-ui](https://github.com/akvo/akvo-data-science-docker/blob/master/docs/flumen-import-link-url.png)]
+So the expected end is set up a new entrypoint that returns csv data so flumen can import it using the UI [[import-ui](https://github.com/akvo/akvo-data-science-services/blob/master/docs/flumen-import-link.png), [link-ui](https://github.com/akvo/akvo-data-science-services/blob/master/docs/flumen-import-link-url.png)]
 
 
 ## How to use it?
@@ -35,10 +35,21 @@ eg: http://localhost:7001/lumen-dataset/lumen/5ebbf42e-1e52-43f5-b3fd-edd1dee860
 
 ## workflow
 
-In development you can use any [data](https://github.com/akvo/akvo-data-science-docker/blob/master/data/example.csv#L1) from /data folder in api.R [logic](https://github.com/akvo/akvo-data-science-docker/blob/master/api/api.R#L25), once that you're happy with the results then change static csv data with a call to flumen [api](https://github.com/akvo/akvo-data-science-docker/blob/master/api/api.R#L12-L15). [Plumber](https://www.rplumber.io/) is really easy to use, and here a simple [greeting](https://github.com/akvo/akvo-data-science-docker/blob/master/api/api.R#L28-L32) example 
 
+You'll need an .env file with env vars in your project folder
+
+Example auth values needed in `projects/example-lumen/.env` file 
+
+```
+AUTH_USER_PASSWORD=XXXX
+AUTH_USER_EMAIL=yyyyy
+AUTH_CLIENT_ID=zzzzzz
+AUTH_CLIENT_PASSWORD=wwwwww
+AUTH_ISSUER=qqqqqq
+
+```
 
 
 ## TODO 
-https://github.com/akvo/akvo-data-science-docker/issues
+https://github.com/akvo/akvo-data-science-services/issues
 
