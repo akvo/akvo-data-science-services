@@ -37,5 +37,6 @@ while read -r line; do
         popd
     elif [[ "${line}" =~ ^projects ]]; then 
         echo "Project changed $line"
+        ./support/generic/build_and_deploy.sh ${line}
     fi
 done <<< "${DIRS}"
