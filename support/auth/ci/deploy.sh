@@ -39,7 +39,7 @@ fi
 
 log Pushing images
 gcloud auth configure-docker
-docker push eu.gcr.io/${PROJECT_NAME}/akvo-data-science-services
+docker push eu.gcr.io/${PROJECT_NAME}/akvo-data-science-auth
 
 sed -e "s/\${TRAVIS_COMMIT}/$TRAVIS_COMMIT/" ci/k8s/deployment.yaml > deployment.yaml.donotcommit
 

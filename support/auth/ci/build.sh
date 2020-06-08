@@ -13,6 +13,6 @@ fi
 
 log Creating Production image
 
-docker build --rm=false -t eu.gcr.io/${PROJECT_NAME}/akvo-data-science-services:${TRAVIS_COMMIT} .
+docker build --rm=false -t eu.gcr.io/${PROJECT_NAME}/akvo-data-science-auth:${TRAVIS_COMMIT} .
 
 log Done
