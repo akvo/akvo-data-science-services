@@ -46,7 +46,8 @@ gcloud config set container/use_client_certificate True
 
 if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
     log Environment is production
-    gcloud container clusters get-credentials production
+    exit 0
+   # gcloud container clusters get-credentials production
 else
     log Environement is test
     gcloud container clusters get-credentials test
