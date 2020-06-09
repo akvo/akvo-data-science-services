@@ -31,3 +31,14 @@ a2,b2,11
 a2,b2,10
 "
 }
+
+
+#* @serializer contentType list(type="text/plain")
+#* @get /demo
+function(){
+    "A,B
+a1,b1
+a1,b1
+a1,b2
+"
+}
