@@ -6,7 +6,15 @@ It uses a default data-science akvo email account in auth0 dev and prod envs
 ## Final Purpose
 
 The target idea is to import data from lumen using this webserver. Internally the R code can also connect to flumen to get flow-lumen data, transform it and then return a new dataset. 
-So the expected end is set up a new entrypoint that returns csv data so flumen can import it using the UI [[import-ui](https://github.com/akvo/akvo-data-science-services/blob/master/docs/flumen-import-link.png), [link-ui](https://github.com/akvo/akvo-data-science-services/blob/master/docs/flumen-import-link-url.png)]
+
+
+So the expected end is set up a new entrypoint that returns csv data so flumen can import it using the UI 
+
+[[file:https://github.com/akvo/akvo-data-science-services/blob/master/docs/flumen-import-link.png]],
+
+then use the R entrypoint
+
+[[file:https://github.com/akvo/akvo-data-science-services/blob/master/docs/flumen-import-link-url.png]]
 
 
 ## How to use it?
