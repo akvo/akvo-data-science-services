@@ -9,7 +9,7 @@ auth_headers <- function(){
 #* Example of using/returning the lumen dataset rows
 #* @get /lumen-dataset/<lumen_instance>/<dataset_id>
 function(lumen_instance, dataset_id){
-    lumen_domain <- "akvotest"
+    lumen_domain <- "akvolumen"
     flumen_url <- paste0("https://", lumen_instance, ".", lumen_domain, ".org/api/datasets/", dataset_id)
     dataset <- GET(flumen_url, auth_headers())
     content(dataset)$rows
