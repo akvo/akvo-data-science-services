@@ -7,6 +7,7 @@ auth_headers <- function(){
 }
 
 #* Example of using/returning the lumen dataset rows
+#* @serializer contentType list(type="text/plain")
 #* @get /lumen-dataset/<lumen_instance>/<dataset_id>
 function(lumen_instance, dataset_id){
     lumen_domain <- "akvotest"
