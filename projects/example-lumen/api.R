@@ -10,7 +10,7 @@ auth_headers <- function(){
 #* @serializer contentType list(type="text/plain")
 #* @get /lumen-dataset/<lumen_instance>/<dataset_id>
 function(lumen_instance, dataset_id){
-    lumen_domain <- "akvolumen"
+    lumen_domain <- "akvotest"
     flumen_url <- paste0("https://", lumen_instance, ".", lumen_domain, ".org/api/datasets/", dataset_id)
     dataset <- GET(flumen_url, auth_headers())
     content(dataset)$rows
