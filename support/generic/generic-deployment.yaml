@@ -19,11 +19,11 @@ spec:
         ports:
         - containerPort: 8000
         env:
-        - name: K8S_ENVIRONMENT
+        - name: LUMEN_DOMAIN
           valueFrom:
             configMapKeyRef:
-              name: akvo
-              key: environment
+              name: akvo-data-science-services
+              key: lumen-domain
 ---
 apiVersion: v1
 kind: Service

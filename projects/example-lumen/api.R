@@ -3,13 +3,8 @@ library(httr)
 library(jsonlite)
 library(readr)
 
-
 lumen_dataset_url<- function(lumen_instance, dataset_id){
-     lumen_domain <- "akvotest"
-     if(Sys.getenv("K8S_ENVIRONMENT") == "production"){
-         lumen_domain <- "akvolumen"
-     }
-     paste0("https://", lumen_instance, ".", lumen_domain(), ".org/api/datasets/", dataset_id)
+     paste0("https://", lumen_instance, ".", Sys.getenv("LUMEN_DOMAIN"), ".org/api/datasets/", dataset_id)
 }
 
 
