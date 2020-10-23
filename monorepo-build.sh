@@ -35,7 +35,7 @@ while read -r line; do
             ./ci/deploy.sh
         fi
         popd
-    elif [[ "${line}" =~ ^projects ]]; then 
+    elif [[ "${line}" =~ ^projects && "${line}" != "projects/example-local" ]]; then
         echo "Project changed $line"
         ./support/generic/build_and_deploy.sh ${line}
     fi
