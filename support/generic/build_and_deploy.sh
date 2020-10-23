@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 set -eu
 
 function log {
@@ -7,6 +6,22 @@ function log {
 }
 
 export PROJECT_NAME=akvo-lumen
+
+if [ -z "$TRAVIS_COMMIT" ]; then
+    export TRAVIS_COMMIT=local
+fi
+
+log Creating Production image
+
+project_folder=$(echo $1 | cut -f 2 -d "/")
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+pushd $1
+
+docker build --rm=false -t eu.gcr.io/${PROJECT_NAME}/akvo-data-science-${project_folder}:${TRAVIS_COMMIT} .
+
+
 
 if [[ "${TRAVIS_BRANCH}" != "master" && "${TRAVIS_BRANCH}" != "develop" ]]; then
     exit 0
@@ -31,7 +46,8 @@ gcloud config set container/use_client_certificate True
 
 if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
     log Environment is production
-    gcloud container clusters get-credentials production
+    exit 0
+   # gcloud container clusters get-credentials production
 else
     log Environement is test
     gcloud container clusters get-credentials test
@@ -39,12 +55,14 @@ fi
 
 log Pushing images
 gcloud auth configure-docker
-docker push eu.gcr.io/${PROJECT_NAME}/akvo-data-science-services
+docker push eu.gcr.io/${PROJECT_NAME}/akvo-data-science-${project_folder}
 
-sed -e "s/\${TRAVIS_COMMIT}/$TRAVIS_COMMIT/" ci/k8s/deployment.yaml > deployment.yaml.donotcommit
+sed -e "s/\${TRAVIS_COMMIT}/$TRAVIS_COMMIT/" -e "s/\${project_folder}/$project_folder/" ${DIR}/generic-deployment.yaml > deployment.yaml.donotcommit
 
 kubectl apply -f deployment.yaml.donotcommit
 
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+$DIR/wait-for-k8s-deployment-to-be-ready.sh ${project_folder}
 
-$DIR/k8s/wait-for-k8s-deployment-to-be-ready.sh
+popd
+
+log Done

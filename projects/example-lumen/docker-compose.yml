@@ -1,13 +1,13 @@
 version: "3"
 services:
-  data-science-auth:
+  akvo-data-science-auth:
     environment:
      - AUTH_USER_PASSWORD=${AUTH_USER_PASSWORD}
      - AUTH_USER_EMAIL=${AUTH_USER_EMAIL}
      - AUTH_CLIENT_ID=${AUTH_CLIENT_ID}
      - AUTH_CLIENT_PASSWORD=${AUTH_CLIENT_PASSWORD}
      - AUTH_ISSUER=${AUTH_ISSUER}
-    build: ./../../auth/
+    build: ./../../support/auth/
   api:
     build: .
     volumes:

@@ -1,31 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: akvo-data-science-services
+  name: akvo-data-science-auth
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: akvo-data-science-services
+      run: akvo-data-science-auth
   template:
     metadata:
       labels:
-        run: data-science-services
+        run: akvo-data-science-auth
         code-version: ${TRAVIS_COMMIT}
     spec:
       containers:
-      - name: akvo-data-science-services
-        image: eu.gcr.io/akvo-lumen/akvo-data-science-services:${TRAVIS_COMMIT}
-        imagePullPolicy: Always
+      - name: akvo-data-science-auth
+        image: eu.gcr.io/akvo-lumen/akvo-data-science-auth:${TRAVIS_COMMIT}
         ports:
-        - containerPort: 5000
-        resources:
-          requests:
-            cpu: 100m
-            memory: 200Mi
-          limits:
-            cpu: 1
-            memory: 200Mi
+        - containerPort: 8000
         env:
         - name: AUTH_CLIENT_ID
           valueFrom:
@@ -36,17 +28,17 @@ spec:
           valueFrom:
             secretKeyRef:
               name: data-science
-              key: auth0.client.secret
+              key: auth0.client_secret
         - name: AUTH_USER_EMAIL
           valueFrom:
             secretKeyRef:
               name: data-science
-              key: auth0.user.email
+              key: auth0.user_email
         - name: AUTH_USER_PASSWORD
           valueFrom:
             secretKeyRef:
               name: data-science
-              key: auth0.user.password
+              key: auth0.user_password
         - name: AUTH_ISSUER
           valueFrom:
             configMapKeyRef:
@@ -56,13 +48,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: akvo-data-science-services
+  name: akvo-data-science-auth
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - port: 80
-      targetPort: 5000
+    - port: 8000
+      targetPort: 8000
       protocol: TCP
       name: http
   selector:
-    run: akvo-data-science-services
+    run: akvo-data-science-auth
