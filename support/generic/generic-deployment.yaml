@@ -18,6 +18,12 @@ spec:
         image: eu.gcr.io/akvo-lumen/akvo-data-science-${project_folder}:${TRAVIS_COMMIT}
         ports:
         - containerPort: 8000
+        env:
+        - name: K8S_ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: akvo
+              key: environment
 ---
 apiVersion: v1
 kind: Service
