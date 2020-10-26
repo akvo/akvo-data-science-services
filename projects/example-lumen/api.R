@@ -3,6 +3,9 @@ library(httr)
 library(jsonlite)
 library(readr)
 
+lumen_dataset_url<- function(lumen_instance, dataset_id){
+     paste0("https://", lumen_instance, ".", Sys.getenv("LUMEN_DOMAIN"), ".org/api/datasets/", dataset_id)
+}
 
 #* Function to authenticate with auth0 using default data-science auth0 account 
 auth_headers <- function(){
@@ -13,9 +16,7 @@ auth_headers <- function(){
 #* @serializer contentType list(type="text/plain")
 #* @get /lumen-dataset/<lumen_instance>/<dataset_id>
 function(lumen_instance, dataset_id){
-     lumen_domain <- "akvotest"
-     flumen_url <- paste0("https://", lumen_instance, ".", lumen_domain, ".org/api/datasets/", dataset_id)
-     dataset <- GET(flumen_url, auth_headers())
+     dataset <- GET(lumen_dataset_url(lumen_instance, dataset_id), auth_headers())
      rows <- content(dataset, as="text")
      result <- jsonlite::fromJSON(rows)
      Data <- as.data.frame(result$rows)
