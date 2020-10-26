@@ -7,7 +7,6 @@ lumen_dataset_url<- function(lumen_instance, dataset_id){
      paste0("https://", lumen_instance, ".", Sys.getenv("LUMEN_DOMAIN"), ".org/api/datasets/", dataset_id)
 }
 
-
 #* Function to authenticate with auth0 using default data-science auth0 account 
 auth_headers <- function(){
     add_headers(Authorization = paste0("Bearer ", content(GET("http://akvo-data-science-auth:8000/id_token"))))    
