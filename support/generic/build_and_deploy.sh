@@ -45,11 +45,11 @@ gcloud config set compute/zone europe-west1-d
 gcloud config set container/use_client_certificate True
 
 
-K8S_CONFIG_FILE=support/generic/k8s/config-test.yaml
+K8S_CONFIG_FILE=../../support/generic/k8s/config-test.yaml
 
 if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
     log Environment is production
-    K8S_CONFIG_FILE=support/generic/k8s/config-prod.yaml
+    K8S_CONFIG_FILE=../../support/generic/k8s/config-prod.yaml
     gcloud container clusters get-credentials production
 else
     log Environement is test
