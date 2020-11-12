@@ -2,7 +2,8 @@ library(here)
 library(httr)
 library(jsonlite)
 library(readr)
-
+library(dplyr); library(tidyr)
+library(reshape2)
 
 lumen_dataset_url<- function(lumen_instance, dataset_id){
      paste0("https://", lumen_instance, ".", Sys.getenv("LUMEN_DOMAIN"), ".org/api/datasets/", dataset_id)
@@ -22,6 +23,20 @@ function(lumen_instance, dataset_id){
      result <- jsonlite::fromJSON(rows)
      Data <- as.data.frame(result$rows)
      names(Data) <- result$columns$title
+     
+     model_data <- Data %>% 
+         select(longitude, latitude, build_year, target_audience, region,
+                prediction, `prediction in 1 year`, `prediction in 3 years`,
+                photo) %>%
+         mutate(longitude = as.numeric(as.character(longitude))) %>%
+         mutate(latitude = as.numeric(as.character(latitude))) %>%
+         mutate(build_year = as.numeric(build_year)) %>% 
+         rename(`current status` = prediction,
+                `status in one year` = `prediction in 1 year`,
+                `status in three years` = `prediction in 3 years`) %>%
+         gather("prediction", "functionality", 
+                `current status`, `status in one year`, `status in three years`)
+     
      model_data <- Data 
      format_delim(model_data, delim=",")
 }
