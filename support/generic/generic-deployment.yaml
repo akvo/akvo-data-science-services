@@ -18,6 +18,12 @@ spec:
         image: eu.gcr.io/akvo-lumen/akvo-data-science-${project_folder}:${TRAVIS_COMMIT}
         ports:
         - containerPort: 8000
+        env:
+        - name: LUMEN_DOMAIN
+          valueFrom:
+            configMapKeyRef:
+              name: akvo-data-science-services
+              key: lumen-domain
 ---
 apiVersion: v1
 kind: Service

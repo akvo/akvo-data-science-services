@@ -44,10 +44,13 @@ gcloud config set container/cluster europe-west1-d
 gcloud config set compute/zone europe-west1-d
 gcloud config set container/use_client_certificate True
 
+
+K8S_CONFIG_FILE=../../support/generic/k8s/config-test.yaml
+
 if [[ "${TRAVIS_BRANCH}" == "master" ]]; then
     log Environment is production
-    exit 0
-   # gcloud container clusters get-credentials production
+    K8S_CONFIG_FILE=../../support/generic/k8s/config-prod.yaml
+    gcloud container clusters get-credentials production
 else
     log Environement is test
     gcloud container clusters get-credentials test
@@ -58,6 +61,9 @@ gcloud auth configure-docker
 docker push eu.gcr.io/${PROJECT_NAME}/akvo-data-science-${project_folder}
 
 sed -e "s/\${TRAVIS_COMMIT}/$TRAVIS_COMMIT/" -e "s/\${project_folder}/$project_folder/" ${DIR}/generic-deployment.yaml > deployment.yaml.donotcommit
+
+log "Deploying config $K8S_CONFIG_FILE"
+kubectl apply -f ${K8S_CONFIG_FILE}
 
 kubectl apply -f deployment.yaml.donotcommit
 
