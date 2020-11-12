@@ -9,6 +9,8 @@ services:
      - AUTH_ISSUER=${AUTH_ISSUER}
     build: ./../../support/auth/
   api:
+    environment:
+     - LUMEN_DOMAIN=${LUMEN_DOMAIN}
     build: .
     volumes:
      - ./data:/data
