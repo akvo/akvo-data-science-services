@@ -37,7 +37,6 @@ function(lumen_instance, dataset_id){
          gather("prediction", "functionality", 
                 `current status`, `status in one year`, `status in three years`)
      
-     model_data <- Data 
      format_delim(model_data, delim=",")
 }
 
