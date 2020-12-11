@@ -5,6 +5,9 @@ library(readr)
 library(dplyr); library(tidyr)
 library(reshape2)
 
+lumen_instance <- "akvointernal"
+dataset_id <- "5ea2bcbd-34df-4cfa-9c80-09d3907cf7f7"
+
 lumen_dataset_url<- function(lumen_instance, dataset_id){
      paste0("https://", lumen_instance, ".", Sys.getenv("LUMEN_DOMAIN"), ".org/api/datasets/", dataset_id)
 }
@@ -37,7 +40,6 @@ function(lumen_instance, dataset_id){
          gather("prediction", "functionality", 
                 `current status`, `status in one year`, `status in three years`)
      
-     model_data <- Data 
      format_delim(model_data, delim=",")
 }
 
