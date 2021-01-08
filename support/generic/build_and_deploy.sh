@@ -58,7 +58,7 @@ fi
 
 log Pushing images
 gcloud auth configure-docker
-docker push eu.gcr.io/${PROJECT_NAME}/akvo-data-science-${project_folder}
+docker push "eu.gcr.io/${PROJECT_NAME}/akvo-data-science-${project_folder}:$TRAVIS_COMMIT"
 
 sed -e "s/\${TRAVIS_COMMIT}/$TRAVIS_COMMIT/" -e "s/\${project_folder}/$project_folder/" ${DIR}/generic-deployment.yaml > deployment.yaml.donotcommit
 
