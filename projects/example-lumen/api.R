@@ -16,8 +16,10 @@ auth_headers <- function(){
 
 #* Example of using/returning the lumen dataset rows
 #* @serializer contentType list(type="text/plain")
-#* @get /lumen-dataset/<lumen_instance>/<dataset_id>
-function(lumen_instance, dataset_id){
+#* @get /maintenance-mali
+function(){
+     lumen_instance <- "akvointernal"
+     dataset_id <- "5ea2bcbd-34df-4cfa-9c80-09d3907cf7f7"
      dataset <- GET(lumen_dataset_url(lumen_instance, dataset_id), auth_headers())
      rows <- content(dataset, as="text")
      result <- jsonlite::fromJSON(rows)
